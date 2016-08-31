@@ -161,5 +161,25 @@
 >						WHEN price > 1000 THEN 1000
 >						ELSE 0
 >					END final_price
->				FROM tab2);  
+>				FROM tab2);
 
+## INTO OUTFILE 寫入檔案
+
+>		SELECT *
+>			INTO OUTFILE 'C:\\TEMP\list.txt'
+>		FROM table_name;
+
+>	使用分隔符號
+
+>		SELECT *
+>			INTO OUTFILE 'C:\\TEMP\list.txt'
+>				FIELDS TERMINATED BY '|' -- 分隔
+>		FROM table_name;
+
+>	使用換行符號
+
+>		SELECT *
+>			INTO OUTFILE 'C:\\TEMP\list.txt'
+>				FIELDS TERMINATED BY '|'
+>				LINES TERMINATED BY '@' -- 換行
+>		FROM table_name;
