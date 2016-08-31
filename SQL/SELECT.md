@@ -22,7 +22,7 @@
 >		SELECT col1
 >		FROM tab1 INNER JOIN tab2 ON (col1 = col2)
 
-* INNER JOIN
+* INNER JOIN : 必需要有關聯才會取出
 
 >		FROM tab1 a INNER JOIN tab2 b ON (a.id = b.id)
 >		FROM tab1 a JOIN tab2 b ON (a.id = b.id) -- 預設使用 INNER JOIN
@@ -38,6 +38,22 @@
 >				(SELECT branch_id FROM branch WHERE name = 'abc') b
 >			ON e.branch_id = b.branch_id
 
+
+* LEFT OUTER JOIN : 有關聯和沒關聯都會取出
+
+>		FROM tab1 a
+>			LEFT OUTER JOIN tab2 b
+>			ON (a.id = b.id)
+
+* RIGHT OUTER JOIN
+
+>		FROM tab2 b
+>			RIGHT OUTER JOIN tab1 a
+>			ON (b.id = a.id)
+
+* CROSS JOIN : 交叉聯結
+* NATURAL JOIN : 自然聯結
+
 ## Group by
 
 * 計算至少傳回 2 個員工數的部門
@@ -46,6 +62,16 @@
 >		FROM department d INNER JOIN employee e ON (d.dep_id = e.dep_id)
 >		GROUP BY d.name
 >		HAVING count(e.emp_id) > 2
+
+* MAX() 最大值
+* MIN() 最小值
+* AVG() 平均值
+* SUM() 總和
+* COUNT() 個數
+
+>		SELECT COUNT(DISTINCT id) FROM table; -- 不重覆
+
+
 
 ## Order by
 
@@ -86,4 +112,54 @@
 
 >	MySQL 6.0 尚未實作
 
+## 條件邏輯
+
+>		SELECT id,
+>			CASE
+>				WHEN type = '1' THEN 'type1'
+>				WHEN type = '2' THEN 'type2'
+>				ELSE 'Unknown'
+>			END type_name
+>		FROM table;
+
+* +Subquery
+
+>		SELECT id,
+>			CASE
+>				WHEN type = '1' THEN (SELECT name1 FROM tab2 WHERE type = 1)
+>				WHEN type = '2' THEN 'type2'
+>				ELSE 'Unknown'
+>			END type_name
+>		FROM table;
+
+
+* 某個欄位
+
+>		SELECT
+>			CASE `col_type`
+>				WHEN '1' THEN 'type1'
+>				WHEN '2' THEN 'type2'
+>				ELSE 'Unknown'
+>			END
+>		FROM table;
+
+* EXISTS
+
+>		SELECT
+>			CASE
+>				WHEN EXISTS (SELECT 1 FROM tab2 WHERE name = 'chk') THEN 'Y' 
+>				ELSE 'N'
+>			END chk_status
+>		FROM table;
+
+* Update
+
+>		UPDATE table
+>			SET last_price = (
+>				SELECT 
+>					CASE
+>						WHEN price > 1000 THEN 1000
+>						ELSE 0
+>					END final_price
+>				FROM tab2);  
 
