@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS `dc_tag` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `dc_id` int(10) NOT NULL,
+  `tag_id` smallint(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dc_id` (`dc_id`,`tag_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

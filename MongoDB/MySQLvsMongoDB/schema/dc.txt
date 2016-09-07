@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS `dc` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `url` varchar(128) CHARACTER SET utf8 NOT NULL,
+  `title` varchar(128) COLLATE utf8_bin NOT NULL,
+  `body` text CHARACTER SET utf8,
+  `tag` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tag` (`tag`),
+  KEY `url` (`url`),
+  FULLTEXT KEY `title` (`title`),
+  FULLTEXT KEY `body` (`body`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
